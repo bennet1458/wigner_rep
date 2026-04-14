@@ -12,8 +12,8 @@ m = 1.0   # mass
 q = 5.0   # larger q → clearer interference
 
 # grid
-x = np.linspace(-5, 15, 400)
-p = np.linspace(-5, 15, 400)
+x = np.linspace(-2.5, 17.5, 400)
+p = np.linspace(-2.5, 12.5, 400)
 X, P = np.meshgrid(x, p)
 
 # -----------------------
@@ -21,6 +21,7 @@ X, P = np.meshgrid(x, p)
 # -----------------------
 sigma_x = 0.7
 sigma_p = hbar/(2*sigma_x)
+
 
 def W0(x, p):
     return (1/(np.pi*hbar)) * np.exp(
@@ -108,6 +109,7 @@ im1 = axes[0, 0].imshow(
     W_k1.T,
     extent=[p[0], p[-1], x[0], x[-1]],
     aspect='auto',
+    origin='lower',
     cmap='RdBu_r'
 )
 axes[0, 0].set_xlabel("p")
@@ -120,6 +122,7 @@ im2 = axes[0, 1].imshow(
     W_t1_k1.T,
     extent=[p[0], p[-1], x[0], x[-1]],
     aspect='auto',
+    origin='lower',
     cmap='RdBu_r'
 )
 axes[0, 1].set_xlabel("p")
@@ -132,6 +135,7 @@ im3 = axes[1, 0].imshow(
     W_k2_t1_k1.T,
     extent=[p[0], p[-1], x[0], x[-1]],
     aspect='auto',
+    origin='lower',
     cmap='RdBu_r'
 )
 axes[1, 0].set_xlabel("p")
@@ -145,6 +149,7 @@ im4 = axes[1, 1].imshow(
     W_t2_k2_t1_k1.T,
     extent=[p[0], p[-1], x[0], x[-1]],
     aspect='auto',
+    origin='lower',
     cmap='RdBu_r'
 )
 axes[1, 1].set_xlabel("p")
