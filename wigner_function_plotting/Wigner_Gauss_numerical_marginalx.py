@@ -6,10 +6,10 @@ import matplotlib.pyplot as plt
 # -----------------------
 hbar = 1.0
 eta = .5
-t = 1.0   # time after kick
+t = 4.0   # time after kick
 m = 1.0   # mass
 
-q = 2   # larger q → clearer interference
+q = 4   # larger q → clearer interference
 
 # grid
 x = np.linspace(-2.5, 17.5, 400)
