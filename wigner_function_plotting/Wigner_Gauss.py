@@ -9,7 +9,7 @@ eta = .5
 t = 1.0   # time after kick
 m = 1.0   # mass
 
-q = 20   # larger q → clearer interference
+q = 5   # larger q → clearer interference
 
 # grid
 x = np.linspace(-2.5*q/5, 17.5*q/5, 400)
