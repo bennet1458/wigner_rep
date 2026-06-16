@@ -78,27 +78,27 @@ fig, axes = plt.subplots(1, 2, figsize=(8, 4))
 
 # Subplot 1: Transformed Wigner function
 im1 = axes[0].imshow(
-    W_k1,
-    extent=[p[0], p[-1], x[0], x[-1]],
+    W_k1.T,
+    extent=[x[0], x[-1], p[0], p[-1]],
     aspect='auto',
     origin='lower',
     cmap='RdBu_r'
 )
-axes[0].set_xlabel("p")
-axes[0].set_ylabel("x")
+axes[0].set_xlabel("x")
+axes[0].set_ylabel("p")
 axes[0].set_title("First kick")
 plt.colorbar(im1, ax=axes[0], label="W(x,p)")
 
 # Subplot 2: Wigner function after time evolution
 im2 = axes[1].imshow(
-    W_dc1_t1_k1,
-    extent=[p[0], p[-1], x[0], x[-1]],
+    W_dc1_t1_k1.T,
+    extent=[x[0], x[-1], p[0], p[-1]],
     aspect='auto',
     origin='lower',
     cmap='RdBu_r'
 )
-axes[1].set_xlabel("p")
-axes[1].set_ylabel("x")
+axes[1].set_xlabel("x")
+axes[1].set_ylabel("p")
 axes[1].set_title("First time evolution")
 plt.colorbar(im2, ax=axes[1], label="W(x,p)")
 

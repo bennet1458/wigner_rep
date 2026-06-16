@@ -9,11 +9,13 @@ hbar = 1
 eta = .5
 t = 1.0   # time after kick
 m = 1.0   # mass
-q = 5   # larger q → clearer interference
+
 
 M = 1.0
 Omega = 1.0
-m_number = 0
+m_number = 2
+
+q = 5 + 2*m_number   # larger q → clearer interference
 
 # grid
 x = np.linspace(-2.5*q/5, 17.5*q/5, 400)
@@ -109,54 +111,54 @@ fig, axes = plt.subplots(2, 2, figsize=(8, 8))
 
 # Subplot 1: Transformed Wigner function
 im1 = axes[0, 0].imshow(
-    W_k1.T,
-    extent=[p[0], p[-1], x[0], x[-1]],
+    W_k1,
+    extent=[x[0], x[-1], p[0], p[-1]],
     aspect='auto',
     origin='lower',
     cmap='RdBu_r'
 )
-axes[0, 0].set_xlabel("p")
-axes[0, 0].set_ylabel("x")
+axes[0, 0].set_xlabel("x")
+axes[0, 0].set_ylabel("p")
 axes[0, 0].set_title("First kick")
 plt.colorbar(im1, ax=axes[0, 0], label="W(x,p)")
 
 # Subplot 2: Wigner function after time evolution
 im2 = axes[0, 1].imshow(
-    W_t1_k1.T,
-    extent=[p[0], p[-1], x[0], x[-1]],
+    W_t1_k1,
+    extent=[x[0], x[-1], p[0], p[-1]],
     aspect='auto',
     origin='lower',
     cmap='RdBu_r'
 )
-axes[0, 1].set_xlabel("p")
-axes[0, 1].set_ylabel("x")
+axes[0, 1].set_xlabel("x")
+axes[0, 1].set_ylabel("p")
 axes[0, 1].set_title("First time evolution")
 plt.colorbar(im2, ax=axes[0, 1], label="W(x,p)")
 
 # Subplot 3: Wigner function after second kick
 im3 = axes[1, 0].imshow(
-    W_k2_t1_k1.T,
-    extent=[p[0], p[-1], x[0], x[-1]],
+    W_k2_t1_k1,
+    extent=[x[0], x[-1], p[0], p[-1]],
     aspect='auto',
     origin='lower',
     cmap='RdBu_r'
 )
-axes[1, 0].set_xlabel("p")
-axes[1, 0].set_ylabel("x")
+axes[1, 0].set_xlabel("x")
+axes[1, 0].set_ylabel("p")
 axes[1, 0].set_title("Second kick")
 plt.colorbar(im3, ax=axes[1, 0], label="W(x,p)")
 
 
 # Subplot 4: Wigner function after second kick and time evolution
 im4 = axes[1, 1].imshow(
-    W_t2_k2_t1_k1.T,
-    extent=[p[0], p[-1], x[0], x[-1]],
+    W_t2_k2_t1_k1,
+    extent=[x[0], x[-1], p[0], p[-1]],
     aspect='auto',
     origin='lower',
     cmap='RdBu_r'
 )
-axes[1, 1].set_xlabel("p")
-axes[1, 1].set_ylabel("x")
+axes[1, 1].set_xlabel("x")
+axes[1, 1].set_ylabel("p")
 axes[1, 1].set_title("Second time evolution")
 plt.colorbar(im4, ax=axes[1, 1], label="W(x,p)")
 

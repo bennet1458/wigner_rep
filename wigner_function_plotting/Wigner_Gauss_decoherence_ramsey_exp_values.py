@@ -9,11 +9,11 @@ eta = .5
 t_1 = 1.0e-6   # time after first kick
 t_2 = 1e-6 #150.0e-6   # time after second kick
 m = 1.4e-19   # mass
-omega_0 = 2 * np.pi * 100e3#50e3
+omega_0 = 2 * np.pi * 50e3
 sigma_x = np.sqrt(hbar/(2*m*omega_0))
 sigma_p = np.sqrt(hbar*m*omega_0/2)
 
-q = 3e-23#10e-23   # larger q → clearer interference
+q = 10e-23#10e-23   # larger q → clearer interference
 
 ### Decoherence parameters ###
 diameter = 50e-9
@@ -26,8 +26,8 @@ Lambda = 2 * volume * (gamma_bb(T_i) + gamma_bb(T_e))
 
 
 # grid
-x = np.linspace(-2*sigma_x, 2*sigma_x+2*q*(t_1+t_2)/m, 400)
-p = np.linspace(-0.5*q, 2.5*q, 400)
+x = np.linspace(-2*sigma_x, 2*sigma_x+2*q*(t_1+t_2)/m, 1000)
+p = np.linspace(-0.5*q, 2.5*q, 1000)
 X = x[:, np.newaxis]
 P = p[np.newaxis, :]
 
@@ -221,28 +221,28 @@ plt.colorbar(im2, ax=axes[0, 1], label="W(x,p)")
 
 # Subplot 3: Wigner function after second kick
 im3 = axes[1, 0].imshow(
-    W_k2_dc1_t1_k1,
-    extent=[p[0], p[-1], x[0], x[-1]],
+    W_k2_dc1_t1_k1.T,
+    extent=[x[0], x[-1], p[0], p[-1]],
     aspect='auto',
     origin='lower',
     cmap='RdBu_r'
 )
-axes[1, 0].set_xlabel("p")
-axes[1, 0].set_ylabel("x")
+axes[1, 0].set_xlabel("x")
+axes[1, 0].set_ylabel("p")
 axes[1, 0].set_title("Second kick")
 plt.colorbar(im3, ax=axes[1, 0], label="W(x,p)")
 
 
 # Subplot 4: Wigner function after second kick and time evolution
 im4 = axes[1, 1].imshow(
-    W_dc2_t2_k2_dc1_t1_k1,
-    extent=[p[0], p[-1], x[0], x[-1]],
+    W_dc2_t2_k2_dc1_t1_k1.T,
+    extent=[x[0], x[-1], p[0], p[-1]],
     aspect='auto',
     origin='lower',
     cmap='RdBu_r'
 )
-axes[1, 1].set_xlabel("p")
-axes[1, 1].set_ylabel("x")
+axes[1, 1].set_xlabel("x")
+axes[1, 1].set_ylabel("p")
 axes[1, 1].set_title("Second time evolution")
 plt.colorbar(im4, ax=axes[1, 1], label="W(x,p)")
 
@@ -258,11 +258,12 @@ def integrate_over_p(W_2d):
     dp = p[1] - p[0]  # spacing in p
     return np.sum(W_2d, axis=0) * dp
 
+
 W_t2_k2_t1_k1_marginal = integrate_over_p(W_t2_k2_t1_k1)
 W_dc2_t2_k2_dc1_t1_k1_marginal = integrate_over_p(W_dc2_t2_k2_dc1_t1_k1)
 plt.figure(figsize=(6, 4))
-plt.plot(x, W_t2_k2_t1_k1_marginal, linewidth=2)
-plt.plot(x, W_dc2_t2_k2_dc1_t1_k1_marginal, linewidth=2, linestyle='--')
+plt.plot(x[450:550], W_t2_k2_t1_k1_marginal[450:550], linewidth=2)
+plt.plot(x[450:550], W_dc2_t2_k2_dc1_t1_k1_marginal[450:550], linewidth=2, linestyle='--')
 plt.xlabel("x")
 plt.ylabel("Marginal")
 plt.title("Marginal of W(x,p) after second time evolution")
