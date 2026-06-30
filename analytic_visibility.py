@@ -25,7 +25,7 @@ dec = np.zeros((len(Lambdas), len(qs)))
 
 for j, Lambda in enumerate(Lambdas):
     for i, q in enumerate(qs):
-            period = hbar*2*np.pi/(q*t_1)*((t_1+t_2)**2+tau_o**2)/(t_1+t_2)
+            period = hbar*2*np.pi/(2*q*t_1)*((t_1+t_2)**2+tau_o**2)/(t_1+t_2)
             k_c = 2*np.pi/period
             dec[j, i] = np.exp(-(hbar**2/m**2 * Lambda/3 * (t_1 + t_2)**3) * k_c**2)
     plt.plot(qs, dec[j], label=f"Lambda = {Lambda:.0e}")
@@ -43,7 +43,7 @@ t_2s = np.linspace(0, 500e-6, 20)
 
 for j, Lambda in enumerate(Lambdas):
     for i, t_2 in enumerate(t_2s):
-        period = hbar*2*np.pi/(q*t_1)*((t_1+t_2)**2+tau_o**2)/(t_1+t_2)
+        period = hbar*2*np.pi/(2*q*t_1)*((t_1+t_2)**2+tau_o**2)/(t_1+t_2)
         k_c = 2*np.pi/period
         dec[j, i] = np.exp(-(hbar**2/m**2 * Lambda/3 * (t_1 + t_2)**3) * k_c**2)
     plt.plot(t_2s, dec[j], label=f"Lambda = {Lambda:.0e}")

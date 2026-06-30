@@ -8,7 +8,7 @@ def Lambda_x(rho, omega0, V, hbar, lam, eps_r):
 
 hbar = 1.054e-34
 
-omega0 = 50e3
+omega0 = 2*np.pi*50e3
 d = 50e-9
 M = 1.4e-19
 lam = 1550e-9
