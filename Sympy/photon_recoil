@@ -1,0 +1,61 @@
+import sympy as sp
+
+# -------------------------------------------------
+# symbols
+# -------------------------------------------------
+k, phi = sp.symbols('k phi', real=True)
+
+nx, ny, nz = sp.symbols('n_x n_y n_z', real=True)
+
+x, y, z = sp.symbols('x y z', commutative=False)
+
+rho = sp.Symbol('rho', commutative=False)
+
+# -------------------------------------------------
+# vector shorthand
+# -------------------------------------------------
+n_dot_r = nx*x + ny*y + nz*z
+
+# -------------------------------------------------
+# approximations
+# -------------------------------------------------
+f = sp.cos(phi) + k*x*sp.sin(phi)
+
+exp_minus = 1 - sp.I*k*n_dot_r
+exp_plus  = 1 + sp.I*k*n_dot_r
+
+f2 = sp.expand(f*f)
+
+# -------------------------------------------------
+# Lindblad structure
+# -------------------------------------------------
+expr = (
+    f * exp_minus * rho * exp_plus * f
+    - sp.Rational(1,2) * (f2*rho + rho*f2)
+)
+
+expanded = sp.expand(expr)
+
+# -------------------------------------------------
+# keep only terms up to O(k^2)
+# -------------------------------------------------
+terms_k2 = []
+
+for term in expanded.as_ordered_terms():
+
+    # determine power of k manually
+    powers = term.as_powers_dict()
+
+    power_k = powers.get(k, 0)
+
+    if power_k <= 2:
+        terms_k2.append(term)
+
+result = sp.expand(sum(terms_k2))
+
+# -------------------------------------------------
+# print result
+# -------------------------------------------------
+print("\nExpanded Lindblad term up to O(k^2):\n")
+
+sp.pprint(result, use_unicode=True)
