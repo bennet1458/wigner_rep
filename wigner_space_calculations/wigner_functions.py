@@ -64,16 +64,23 @@ def decoherence(W, x, p, t_i, Lambda, m, hbar):
 ###### marginals ##########
 
 
+# def x_marginal(W, p):
+#     """Integrate 2D Wigner function over p axis (sum over p for each x)"""
+#     dp = p[1] - p[0]  # spacing in p
+#     return np.sum(W, axis=0) * dp
 def x_marginal(W, p):
     """Integrate 2D Wigner function over p axis (sum over p for each x)"""
     dp = p[1] - p[0]  # spacing in p
-    return np.sum(W, axis=0) * dp
+    return np.sum(W, axis=1) * dp
+
 
 # def smoothing(y, w=3):
 #     c = np.cumsum(np.insert(y, 0, 0))
 #     return (c[w:] - c[:-w]) / w
 
 def smoothing(y, w=3):
+    if w == 0:
+        return y
     ys = y.copy()
 
     for _ in range(w):
@@ -109,8 +116,8 @@ def modulation_depth(y, w=3): #w should be low for larger q
     
     len_y = len(y)
 
-    if left[-1] < 0.25*len_y or right[0] > 0.75*len_y:
-        return 0.0
+    # if left[-1] < 0.25*len_y or right[0] > 0.75*len_y:
+    #     return 0.0
 
     lv = y[left[-1]]
     rv = y[right[0]]
@@ -133,3 +140,4 @@ def modulation_depth(y, w=3): #w should be low for larger q
         return 1.0
 
     return M
+

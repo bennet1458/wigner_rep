@@ -44,6 +44,16 @@ def transform(W):
     return transformed
 
 
+def double_slit(W, d, hbar):
+    def W_shifted(x, p):
+        return 1/2*(
+            W(x-d/2, p)
+            - 2 * np.cos(p/hbar * d ) * W(x, p)
+            + W(x+d/2, p)
+        )
+    return W_shifted
+
+
 def decoherence(W, x, p, t_i, Lambda, m, hbar):
     # grid spacing
     dx = x[1] - x[0]

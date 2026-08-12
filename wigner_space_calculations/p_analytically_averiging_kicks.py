@@ -68,7 +68,7 @@ def avg_marginal(sigma_b_dash):
 
 fig, axes = plt.subplots(3, 1, figsize=(12, 8))
 
-sigma_b_dash_values = np.logspace(-2, -0.0001, 8)
+sigma_b_dash_values = np.logspace(-2, -0.0001, 3)
 print(sigma_b_dash_values)
 
 # Subplot 1: Transformed Wigner function
@@ -81,9 +81,9 @@ visibility_values = np.zeros(len(sigma_b_dash_values))
 for i, sigma_b_dash in enumerate(sigma_b_dash_values):
     marginal = avg_marginal(sigma_b_dash)
     visibility_values[i] = wf.modulation_depth(marginal, w=w)
-    axes[0].plot(x, marginal, linewidth=2, linestyle='-', label='$\sigma_b^\\prime$ = {:.2f}'.format(sigma_b_dash))
+    axes[0].plot(x, marginal, linewidth=2, linestyle='-', label='$\sigma_b/\mu_b$ = {:.2f}'.format(sigma_b_dash))
 
-axes[0].set_xlabel("x")
+axes[0].set_xlabel("x [m]")
 axes[0].set_ylabel("Marginal")
 axes[0].legend()
 
@@ -99,7 +99,7 @@ for i, sigma_b_dash in enumerate(sigma_b_dash_values):
     visibility_values_2[i] = wf.modulation_depth(marginal, w=w)
     axes[1].plot(x, marginal, linewidth=2, linestyle='-', label='$\sigma_b^\\prime$ = {:.2f}'.format(sigma_b_dash))
 
-axes[1].set_xlabel("x")
+axes[1].set_xlabel("x [m]")
 axes[1].set_ylabel("Marginal")
 # axes[1].legend()
 

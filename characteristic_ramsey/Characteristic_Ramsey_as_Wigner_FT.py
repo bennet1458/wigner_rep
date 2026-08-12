@@ -4,25 +4,30 @@ import matplotlib.pyplot as plt
 # -----------------------
 # parameters
 # -----------------------
-hbar = 2.0
+hbar = 1.0
 eta = .5
 t = 1.0   # time after kick
 m = 1.0   # mass
 
-sigma_p = 1
-sigma_x = hbar/(2*sigma_p)
-
-q = 8
+q = 5   # larger q → clearer interference
 
 # grid
-x = np.linspace(-2.5*q/5, 17.5*q/5, 400)
-p = np.linspace(-2.5*q/5, 12.5*q/5, 400)
+x = np.linspace(-2.5*q/5*2, 17.5*q/5*2, 400)
+p = np.linspace(-2.5*q/5*2, 12.5*q/5*2, 400)
 X, P = np.meshgrid(x, p)
+
+dx = x[1]-x[0]
+dp = p[1]-p[0]
+
+w = np.fft.fftshift(np.fft.fftfreq(len(x), d=dx))*2*np.pi*hbar
+s = np.fft.fftshift(np.fft.fftfreq(len(p), d=dp))*2*np.pi*hbar
 
 # -----------------------
 # initial Wigner function
 # -----------------------
- # larger q → clearer interference
+sigma_x = 1
+sigma_p = hbar/(2*sigma_x)
+
 
 def W0(x, p):
     return (1/(np.pi*hbar)) * np.exp(
@@ -99,6 +104,18 @@ W_t2_k2_t1_k1 = ( eta**4 * W0(X - (2*P - q)*t/m, P - 2*q)
     + (1 - eta)**4 * W0(X - (2*P)*t/m, P)
 )
 
+
+def fft2d(Wigner):
+
+    chi = np.fft.ifft(Wigner, axis=0)   # x -> w
+    chi = np.fft.fft(chi, axis=1)     # p -> s
+    chi = np.fft.fftshift(chi)
+    chi = np.absolute(chi)
+    return chi
+
+
+
+
 # -----------------------
 # plot subplots
 # -----------------------
@@ -107,54 +124,54 @@ fig, axes = plt.subplots(2, 2, figsize=(8, 8))
 
 # Subplot 1: Transformed Wigner function
 im1 = axes[0, 0].imshow(
-    W_k1,
-    extent=[x[0], x[-1], p[0], p[-1]],
+    fft2d(W_k1).T,
+    extent=[w[0],w[-1], s[0], s[-1]],
     aspect='auto',
     origin='lower',
     cmap='RdBu_r'
 )
-axes[0, 0].set_xlabel("x  [$\sigma_x$]")
-axes[0, 0].set_ylabel("p [$\sigma_p$]")
+axes[0, 0].set_xlabel("x")
+axes[0, 0].set_ylabel("p")
 axes[0, 0].set_title("First kick")
 plt.colorbar(im1, ax=axes[0, 0], label="W(x,p)")
 
 # Subplot 2: Wigner function after time evolution
 im2 = axes[0, 1].imshow(
-    W_t1_k1,
-    extent=[x[0], x[-1], p[0], p[-1]],
+    fft2d(W_t1_k1),
+    extent=[w[0],w[-1], s[0], s[-1]],
     aspect='auto',
     origin='lower',
     cmap='RdBu_r'
 )
-axes[0, 1].set_xlabel("x  [$\sigma_x$]")
-axes[0, 1].set_ylabel("p [$\sigma_p$]")
+axes[0, 1].set_xlabel("x")
+axes[0, 1].set_ylabel("p")
 axes[0, 1].set_title("First time evolution")
 plt.colorbar(im2, ax=axes[0, 1], label="W(x,p)")
 
 # Subplot 3: Wigner function after second kick
 im3 = axes[1, 0].imshow(
-    W_k2_t1_k1,
-    extent=[x[0], x[-1], p[0], p[-1]],
+    fft2d(W_k2_t1_k1),
+    extent=[w[0],w[-1], s[0], s[-1]],
     aspect='auto',
     origin='lower',
     cmap='RdBu_r'
 )
-axes[1, 0].set_xlabel("x  [$\sigma_x$]")
-axes[1, 0].set_ylabel("p [$\sigma_p$]")
+axes[1, 0].set_xlabel("x")
+axes[1, 0].set_ylabel("p")
 axes[1, 0].set_title("Second kick")
 plt.colorbar(im3, ax=axes[1, 0], label="W(x,p)")
 
 
 # Subplot 4: Wigner function after second kick and time evolution
 im4 = axes[1, 1].imshow(
-    W_t2_k2_t1_k1,
-    extent=[x[0], x[-1], p[0], p[-1]],
+    fft2d(W_t2_k2_t1_k1),
+    extent=[w[0],w[-1], s[0], s[-1]],
     aspect='auto',
     origin='lower',
     cmap='RdBu_r'
 )
-axes[1, 1].set_xlabel("x  [$\sigma_x$]")
-axes[1, 1].set_ylabel("p [$\sigma_p$]")
+axes[1, 1].set_xlabel("x")
+axes[1, 1].set_ylabel("p")
 axes[1, 1].set_title("Second time evolution")
 plt.colorbar(im4, ax=axes[1, 1], label="W(x,p)")
 

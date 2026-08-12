@@ -41,7 +41,7 @@ for j, q in enumerate(q_values):
         dec[i, j] = np.exp(-(hbar**2/m**2 * Lambda_fix/3 * (t_1 + t_2)**3) * k_c**2)
 
 # Create figure with 3 subplots in a row
-fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(18, 5))
+fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(8, 16))
 
 # Plot 1: Heatmap
 im = ax1.imshow(dec, extent=(q_values[0], q_values[-1], t_2_values[0], t_2_values[-1]), aspect='auto', origin='lower')

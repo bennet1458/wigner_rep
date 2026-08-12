@@ -36,7 +36,7 @@ b_min = 50e-9/2
 q_max = A/b_min
 
 # grid
-res_x = 200
+res_x = 500
 res_b = 100
 res_t = 20
 plotwidth = 4
@@ -89,16 +89,16 @@ fig, axes = plt.subplots(2, 1, figsize=(8, 8))
 
 
 # sigma_t_values = np.array([1, 2, 5, 10])*1e-9
-sigma_t_values = np.logspace(-3.5, -2, 8)*1e-6
+sigma_t_values = np.logspace(-3.5, -2, 4)*1e-6
 print(sigma_t_values)
 visibility_values = np.zeros(len(sigma_t_values))
 for i, sigma_t in enumerate(sigma_t_values):
     marginal = avg_marginal(sigma_t)
     visibility_values[i] = wf.modulation_depth(marginal, w=w)
-    axes[0].plot(x, marginal, linewidth=2, linestyle='-', label='$\sigma_t$ = {:.2e}'.format(sigma_t))
+    axes[0].plot(x, marginal, linewidth=2, linestyle='-', label='$\sigma_t$ = {:.1f}ns'.format(sigma_t*1e9))
 
 
-axes[0].set_xlabel("x")
+axes[0].set_xlabel("x [m]")
 axes[0].set_ylabel("Marginal")
 axes[0].legend()
 axes[1].plot(sigma_t_values, visibility_values, color='black')

@@ -97,19 +97,7 @@ for j, t_2 in enumerate(t_2_values):
     k_R_exp_t2[j] = k_values[peak_idx]
 
     # theoretical fringe spacing
-
-    fringe_period = (
-        hbar
-        * 2
-        * np.pi
-        / (2 * q_fix * t_1)
-        * ((t_1 + t_2) ** 2 + tau_o**2)
-        / (t_1 + t_2)
-    )
-
-    # theoretical wave number
-    k_R_theo_t2[j] = 2 * np.pi / fringe_period
-
+    k_R_theo_t2[j] = q_fix/hbar*(t_1*(t_1+t_2))/((t_1+t_2)**2+tau_o**2)
 # -----------------------
 # calculate fringe wave number for q scan
 # -----------------------
@@ -152,17 +140,7 @@ for i, q in enumerate(q_values):
     k_R_exp_q[i] = k_values[peak_idx]
 
     # theoretical fringe spacing
-    fringe_period = (
-        hbar
-        * 2
-        * np.pi
-        / (2 * q * t_1)
-        * ((t_1 + t_2_fix) ** 2 + tau_o**2)
-        / (t_1 + t_2_fix)
-    )
-
-    # theoretical wave number
-    k_R_theo_q[i] = 2 * np.pi / fringe_period
+    k_R_theo_q[i] = q/hbar*(t_1*(t_1+t_2_fix))/((t_1+t_2_fix)**2+tau_o**2)
 
 # -----------------------
 # plot

@@ -12,8 +12,8 @@ hbar = 1.054571817e-34  # Reduced Planck constant (J·s)
 k_B = 1.380649e-23  # Boltzmann constant (J/K)
 
 # Different mass units (in amu)
-mass_units = [1e8, 1e7, 1e6, 1e5]  # amu
-mass_linestyles = ['-', '--', '-.', ':']
+mass_units = [1e8,  1e6]  # amu
+mass_linestyles = ['-', '--']
 mass_labels = [f'{m:.1g} amu' for m in mass_units]
 
 print(np.sqrt(mass_units[0]* 1.66053906892e-27*hbar*2*np.pi*frequencies[0]/2))
@@ -21,7 +21,7 @@ def q_function(T, hbar=hbar, m=1, omega=1, k_B=k_B):
     q = sep*np.sqrt(hbar*m*omega/2)*np.sqrt(2/(np.exp((hbar*omega)/(k_B*T))-1)+1)
     return q
 
-T_values = np.logspace(-8, 3, 500)
+T_values = np.logspace(-8, -3, 500)
 
 # Create the plot
 plt.figure(figsize=(8, 6))
